@@ -1,0 +1,13 @@
+FROM node:19.0.0
+
+WORKDIR /usr/src/api
+
+COPY package*.json ./
+RUN npm install
+
+COPY . .
+
+RUN npx prisma generate
+
+EXPOSE $API_PORT
+CMD ["npm", "run","dev"]

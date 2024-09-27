@@ -1,0 +1,44 @@
+version: '3.8'
+services:
+  postgres:
+    image: postgres:16
+    restart: always
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
+  express:
+    build: 
+      context: ./api
+      dockerfile: Dockerfile
+    ports:
+      - "5001:5001"
+    restart: always
+    container_name: express_container
+    volumes:
+      - /api/node_modules
+      - type: bind
+        source: ./api
+        target: /usr/src/api
+    
+  react:
+    build: 
+      context: ./app
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    restart: always
+    container_name: react_container
+    volumes:
+      - /app/node_modules
+      - type: bind
+        source: ./app
+        target: /usr/src/app
+  
+volumes:
+  postgres_data:
