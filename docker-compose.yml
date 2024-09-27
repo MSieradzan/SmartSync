@@ -19,7 +19,7 @@ services:
     ports:
       - "5001:5001"
     restart: always
-    container_name: express_container
+    container_name: express_container_SS
     volumes:
       - /api/node_modules
       - type: bind
@@ -33,7 +33,7 @@ services:
     ports:
       - "3000:3000"
     restart: always
-    container_name: react_container
+    container_name: react_container_SS
     volumes:
       - /app/node_modules
       - type: bind
