@@ -25,7 +25,14 @@ services:
       - type: bind
         source: ./api
         target: /usr/src/api
-    
+    develop:
+      watch:
+        - action: sync
+          path: ./api
+          target: /usr/src/api
+          ignore:
+            - node_modules/
+
   react:
     build: 
       context: ./app
@@ -35,10 +42,22 @@ services:
     restart: always
     container_name: react_container_SS
     volumes:
-      - /app/node_modules
+      - /user/app/node_modules
       - type: bind
         source: ./app
         target: /usr/src/app
-  
+    develop:
+      watch:
+        - action: sync
+          path: ./app
+          target: /usr/src/app
+          ignore:
+            - node_modules/
+    environment:
+      - CHOKIDAR_USEPOLLING=true
+      - CHOKIDAR_INTERVAL=100
+    stdin_open: true  # Keeps the container open
+    tty: true         # Enables a terminal interface for hot reload
+
 volumes:
   postgres_data:

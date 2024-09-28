@@ -3,7 +3,7 @@ FROM node:19.0.0
 WORKDIR /usr/src/api
 
 COPY package*.json ./
-RUN npm install
+RUN npm install --verbose
 
 COPY . .
 
